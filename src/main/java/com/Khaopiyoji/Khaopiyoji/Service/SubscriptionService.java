@@ -6,10 +6,7 @@ import com.Khaopiyoji.Khaopiyoji.Entity.Vendors;
 import com.Khaopiyoji.Khaopiyoji.Repository.CustomerRepository;
 import com.Khaopiyoji.Khaopiyoji.Repository.SubscriptionRepository;
 import com.Khaopiyoji.Khaopiyoji.Repository.VendorRepository;
-import com.razorpay.RazorpayClient;
-import com.razorpay.RazorpayException;
-import netscape.javascript.JSObject;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -31,10 +28,8 @@ public class SubscriptionService {
     private SubscriptionRepository subscriptionRepository;
     @Autowired
     private EmailService emailService;
-    @Autowired
-    private RazorpayClient razorpayClient;
 
-    public Subscriptions createsubscription(String customerusername, String vendorusername) throws RazorpayException {
+    public Subscriptions createsubscription(String customerusername, String vendorusername)  {
         Customer customer = customerRepository.findBycustomerusername(customerusername);
         if (customer == null) {
             throw new RuntimeException("no customer with this username");
@@ -65,25 +60,6 @@ public class SubscriptionService {
         customer.setSubscriptionIsActive(subscriptions1.isActive());
         customer.setStartDate(subscriptions1.getStartDate());
         customer.setSubscriptionid(subscriptions1.getSubscriptionid());
-
-        RazorpayClient client = new RazorpayClient("rzp_test_6E8mOkIV3iW13v","5AcaWIMZUSk9afJlKPsK9xs0");
-        JSONObject object = new JSONObject();
-        object.put("period","monthly");
-        object.put("interval",0);
-        object.put("plan_id",vendors.getVendorId());
-        object.put("total_count",1);
-        object.put("start_at",customer.getStartDate());
-        object.put("expire_by",customer.getEndDate());
-        // Creating the child object: item
-        JSONObject addons = new JSONObject();
-        JSONObject item = new JSONObject();
-        item.put("name",vendors.getVendorusername());
-        item.put("amount",vendors.getSubscription_price());
-        item.put("currency","INR");
-        item.put("name", "Delivery Fee");
-        item.put("amount", 30000);
-        item.put("currency", "INR");
-        object.put("item", item);
 
         emailService.messages(customer.getEmail(),"regarding subscription","you have successfully subscribed your desired vendor");
         customerRepository.save(customer);
