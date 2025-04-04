@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Khaopiyoji</title>
+    <link rel="stylesheet" href= "signup-vendor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        Khaopiyoji
+    </header>
+
+    <div class="container">
+        <form action="#" method="POST" class="signup-form">
+            <h2>Signup for Khaopiyoji</h2>
+
+            <!-- Profile Picture -->
+            <div class="profile-photo">
+                <label for="profile-pic">
+                    <div class="circle">
+                        <i class="camera-icon">📸</i>
+                    </div>
+                </label>
+                <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
+            </div>
+
+            <!-- Vendor Username -->
+            <div class="form-group">
+                <label for="vendor-username">Vendor Username</label>
+                <input type="text" id="vendor-username" name="vendor-username" required>
+            </div>
+
+            <!-- Vendor Name -->
+            <div class="form-group">
+                <label for="vendor-name">Vendor Name</label>
+                <input type="text" id="vendor-name" name="vendor-name" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Business Area -->
+            <div class="form-group">
+                <label for="business-area">Business Area</label>
+                <input type="text" id="business-area" name="business-area" required>
+            </div>
+
+            <!-- Lunchtime -->
+            <div class="form-group">
+                <label for="lunchtime">Lunchtime</label>
+                <input type="time" id="lunchtime" name="lunchtime" required>
+            </div>
+
+            <!-- Breakfast Time -->
+            <div class="form-group">
+                <label for="breakfast">Breakfast Time</label>
+                <input type="time" id="breakfast" name="breakfast" required>
+            </div>
+
+            <!-- Dinner Time -->
+            <div class="form-group">
+                <label for="dinnertime">Dinner Time</label>
+                <input type="time" id="dinnertime" name="dinnertime" required>
+            </div>
+
+            <!-- Speciality -->
+            <div class="form-group">
+                <label for="speciality">Speciality</label>
+                <input type="text" id="speciality" name="speciality" required>
+            </div>
+
+            <!-- Addons -->
+            <div class="form-group">
+                <label for="addons">Addons</label>
+                <input type="text" id="addons" name="addons">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
