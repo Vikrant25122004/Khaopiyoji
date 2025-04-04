@@ -8,6 +8,7 @@ import com.Khaopiyoji.Khaopiyoji.Service.VendorDetailService;
 import com.Khaopiyoji.Khaopiyoji.Service.VendorService;
 
 import com.Khaopiyoji.Khaopiyoji.utils.Jwtutils;
+import jakarta.mail.Multipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+@CrossOrigin
 @RestController
 @RequestMapping("/public")
 public class PublicController {
@@ -47,13 +50,15 @@ public class PublicController {
             return new ResponseEntity<>(e,HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("create-customer")
-    public ResponseEntity<?> registerCustomer(@RequestBody Customer customer){
+    @PostMapping("/create-customer")
+    public ResponseEntity<?> registerCustomer(@RequestPart("customer") Customer customer, @RequestPart("imageFile") MultipartFile imageFile){
         try {
-            customerService.createcustomer(customer);
+
+            customerService.createcustomer(customer,imageFile);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e,HttpStatus.BAD_REQUEST);
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/login-customr")

@@ -25,6 +25,10 @@ public class Customer {
     private String email;
     private String password;
     private String address;
+    private String imageName;
+    private String imageType;
+    @Lob
+    private byte[] imageData;
 
     @Column(name = "subscription_vendor_username")
     private String subscriptionVendorUsername;
