@@ -7,12 +7,19 @@ import com.Khaopiyoji.Khaopiyoji.Repository.VendorRepository;
 import com.Khaopiyoji.Khaopiyoji.Service.CustomerService;
 import com.Khaopiyoji.Khaopiyoji.Service.SubscriptionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -86,9 +93,7 @@ public class CustomerController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-
-
     }
+
 
 }

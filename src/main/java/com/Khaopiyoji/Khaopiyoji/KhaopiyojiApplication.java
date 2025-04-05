@@ -11,8 +11,12 @@ public class KhaopiyojiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KhaopiyojiApplication.class, args);
 
-	}
 
+	}
+	@Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
 
 
 }
