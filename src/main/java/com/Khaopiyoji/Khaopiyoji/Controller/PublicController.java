@@ -12,12 +12,16 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +29,8 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.Objects;
-@CrossOrigin
-@RestController
+
+@Controller
 @RequestMapping("/public")
 public class PublicController {
     private static final Logger logger = LoggerFactory.getLogger(PublicController.class);
@@ -43,6 +47,9 @@ public class PublicController {
     private Jwtutils jwtutils;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
 
     @PostMapping("create-vendor")
@@ -56,8 +63,10 @@ public class PublicController {
             return new ResponseEntity<>(e,HttpStatus.BAD_REQUEST);
         }
     }
+    // Method to show the signup form (GET request)
+
     @PostMapping("/create-customer")
-    public ResponseEntity<?> registerCustomer(@RequestPart Customer customer, @RequestPart MultipartFile imageFile){
+    public ResponseEntity<?> registerCustomer(@RequestPart("customer") Customer customer, @RequestPart("imageFile") MultipartFile imageFile){
         try {
 
             customerService.createcustomer(customer,imageFile);
@@ -95,19 +104,7 @@ public class PublicController {
 
         }
     }
-    @PostMapping("/create-order")
-    public ResponseEntity<?> createorder()throws Exception{
 
-        RazorpayClient client = new RazorpayClient("rzp_test_8LZboHNs3lEOMm","4QpAyV4JCZ9XkjbazDUC1Wa0");
-        JSONObject object = new JSONObject();
-        object.put("amount",10000);
-        object.put("currency","INR");
-        object.put("receipt","txn_235425");
-        Order order = client.orders.create(object);
-        System.out.println(order);
-        return new ResponseEntity<>(order,HttpStatus.OK);
-
-    }
 
 
 }

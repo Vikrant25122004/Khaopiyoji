@@ -7,6 +7,10 @@ import com.Khaopiyoji.Khaopiyoji.Repository.CustomerRepository;
 import com.Khaopiyoji.Khaopiyoji.Repository.SubscriptionRepository;
 import com.Khaopiyoji.Khaopiyoji.Repository.VendorRepository;
 
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -29,7 +33,7 @@ public class SubscriptionService {
     @Autowired
     private EmailService emailService;
 
-    public Subscriptions createsubscription(String customerusername, String vendorusername)  {
+    public Subscriptions createsubscription(String customerusername, String vendorusername) throws RazorpayException {
         Customer customer = customerRepository.findBycustomerusername(customerusername);
         if (customer == null) {
             throw new RuntimeException("no customer with this username");
@@ -38,10 +42,7 @@ public class SubscriptionService {
         if (vendors == null) {
             throw new RuntimeException("no vendor with this username");
         }
-        if (customer.getSubscriptionid()!=0){
-            throw new RuntimeException("you already have a subscribed vendor");
 
-        }
         Subscriptions subscriptions = new Subscriptions();
         subscriptions.setActive(true);
         subscriptions.setStartDate(new Date());
@@ -87,6 +88,18 @@ public class SubscriptionService {
             customer.setSubscriptionIsActive(false);
         }
     }
+    public void deletesubs(Long subscriptionId){
+        Subscriptions subscriptions = subscriptionRepository.findBysubscriptionid(subscriptionId);
+        long customerid = subscriptions.getCustomerId();
+        Customer customer = customerRepository.findBycustomerId(customerid);
+        subscriptionRepository.deleteById(subscriptionId);
+        customer.setSubscriptionid(0);
+        customer.setSubscriptionVendorUsername(null);
+        customer.setEndDate(null);
+        customer.setStartDate(null);
+        customer.setSubscriptionIsActive(false);
+
+    }
     @Scheduled(cron = "0 0 12 * * ?")
     public void checkSubscriptionExpiry(){
         LocalDate today = LocalDate.now();
@@ -125,7 +138,6 @@ public class SubscriptionService {
     }
     public Subscriptions renew(long customerid){
         Subscriptions subscriptions = subscriptionRepository.findBycustomerId(customerid);
-        if (subscriptions.isActive()==false){
         subscriptions.setActive(true);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(subscriptions.getEndDate());
@@ -138,10 +150,7 @@ public class SubscriptionService {
         customer.setSubscriptionIsActive(updatesubs.isActive());
         customerRepository.save(customer);
         emailService.messages(customer.getEmail(),"renew of subscription","you have successfully renewec ur subscription");
-        return updatesubs;}
-        else {
-            return null;
-        }
+        return updatesubs;
 
 
     }
