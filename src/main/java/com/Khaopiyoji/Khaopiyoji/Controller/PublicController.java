@@ -7,6 +7,7 @@ import com.Khaopiyoji.Khaopiyoji.Service.*;
 import com.Khaopiyoji.Khaopiyoji.utils.Jwtutils;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.Multipart;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.Objects;
-
+@Tag(name = "Public APIs")
 @Controller
 @RequestMapping("/public")
 public class PublicController {
@@ -55,7 +56,7 @@ public class PublicController {
     @PostMapping("create-vendor")
     public ResponseEntity<?> registerVendor(@RequestBody Vendors vendors){
         try {
-            vendorService.createvendor(vendors);
+
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e) {
@@ -76,7 +77,7 @@ public class PublicController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/login-customr")
+    @PostMapping("/login-customer")
     public ResponseEntity<String> login(@RequestBody Customer customer) {
         try{
 

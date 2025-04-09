@@ -6,6 +6,7 @@ import com.Khaopiyoji.Khaopiyoji.Repository.VendorRepository;
 import com.Khaopiyoji.Khaopiyoji.Service.SubscriptionService;
 import com.Khaopiyoji.Khaopiyoji.Service.VendorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "Vendor APIs")
 @RestController
 @RequestMapping("/Vendor")
 public class VendorsController {
