@@ -10,6 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,8 @@ import com.Khaopiyoji.Khaopiyoji.Repository.myorderrepository;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+
+@Tag(name = "Customer APIs")
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -99,6 +104,7 @@ public class CustomerController {
                 Vendors vendors = vendorRepository.findByvendorusername(vendorusername);
                 long vid = vendors.getVendorId();
                 String plan_id = String.valueOf(vid);
+
                 Subscriptions subscriptions1 = subscriptionService.createsubscription(username, vendorusername);
                 return new ResponseEntity<>(subscriptions1, HttpStatus.CREATED);
             }
