@@ -27,7 +27,7 @@ public class CustomerService {
         customer.setImageName(imageFile.getOriginalFilename());
         customer.setImageType(imageFile.getContentType());
         customer.setImageData(imageFile.getBytes());
-        customer.setPassword( passwordEncoder.encode(customer.getPassword()));
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customerRepository.save(customer);
     }
     @Transactional

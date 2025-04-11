@@ -54,7 +54,9 @@ public class SpringSecurity {
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
+
         return new BCryptPasswordEncoder();
+
     }
     @Bean
     public DaoAuthenticationProvider customerAuthenticationProvider(){

@@ -56,7 +56,7 @@ public class PublicController {
     @PostMapping("create-vendor")
     public ResponseEntity<?> registerVendor(@RequestBody Vendors vendors){
         try {
-
+            vendorService.createvendor(vendors);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e) {
